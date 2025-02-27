@@ -12,6 +12,10 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centers content vertically */
+            align-items: center; /* Centers content horizontally */
             text-align: center;
         }
         
@@ -21,12 +25,6 @@
             word-wrap: break-word;
             font-size: 18px;
             line-height: 1.5;
-            margin: 0 auto; /* Center horizontally */
-            min-height: 1200px; /* Forces scrolling on iPhone 13 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between; /* Pushes button to bottom */
         }
         
         #nextButton {
@@ -47,15 +45,20 @@
         }
         
         #mButton {
-            margin-bottom: 20px; /* Space from bottom edge */
-            padding: 5px 10px;
+            position: fixed; /* Fixes to bottom of screen */
+            bottom: 20px; /* Distance from bottom */
+            left: 50%; /* Centers horizontally */
+            transform: translateX(-50%); /* Adjusts for button width */
+            padding: 0; /* Removes padding for centering */
             background-color: transparent;
             color: #666;
             border: 1px solid #666;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 14px;
+            width: 20px; /* Smaller size */
+            height: 20px;
+            font-size: 12px; /* Smaller font */
+            line-height: 18px; /* Centers "M" vertically */
+            text-align: center; /* Centers "M" horizontally */
             cursor: pointer;
             transition: color 0.3s, border-color 0.3s;
         }
@@ -70,24 +73,24 @@
                 font-size: 16px;
                 padding: 15px;
             }
-            #nextButton, #mButton {
+            #nextButton {
                 font-size: 12px;
             }
             #mButton {
-                width: 25px;
-                height: 25px;
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+                line-height: 16px; /* Adjusts centering on smaller size */
             }
         }
     </style>
 </head>
 <body>
     <div class="quote-container">
-        <div>
-            <p id="quote"></p>
-            <button id="nextButton">Next Quote</button>
-        </div>
-        <button id="mButton" onclick="window.location.href='m.html'">M</button>
+        <p id="quote"></p>
+        <button id="nextButton">Next Quote</button>
     </div>
+    <button id="mButton" onclick="window.location.href='m.html'">M</button>
 
     <script>
         const quotes = [
@@ -139,7 +142,7 @@
             "To live happily is an inward power of the soul. - Marcus Aurelius",
             "The art of living is more like wrestling than dancing. - Marcus Aurelius",
             "Think of yourself as dead. You have lived your life. Now take what’s left and live it properly. - Marcus Aurelius",
-            "Nothing happens to any man that he is not formed by nature_to bear. - Marcus Aurelius",
+            "Nothing happens to any man that he is not formed by nature to bear. - Marcus Aurelius",
             "The universe is change; our life is what our thoughts make it. - Marcus Aurelius",
             "No great thing is created suddenly. - Epictetus",
             "He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has. - Epictetus",
