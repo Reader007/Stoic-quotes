@@ -30,7 +30,7 @@
             margin-top: 20px;
             padding: 5px 10px;
             background-color: transparent;
-            color: #666; /* Subtle gray to make it less prominent */
+            color: #666;
             border: 1px solid #666;
             border-radius: 5px;
             cursor: pointer;
@@ -39,7 +39,7 @@
         }
         
         #nextButton:hover {
-            color: #fff; /* Brightens on hover for usability */
+            color: #fff;
             border-color: #fff;
         }
         
@@ -273,15 +273,20 @@
             return dayOfYear % quotes.length;
         }
 
-        // Initialize quote index and display
+        // Function to get a random quote index
+        function getRandomQuoteIndex() {
+            return Math.floor(Math.random() * quotes.length);
+        }
+
+        // Initialize quote and display
         let currentIndex = getDailyQuoteIndex();
         const quoteElement = document.getElementById('quote');
         quoteElement.textContent = quotes[currentIndex];
 
-        // Next button functionality
+        // Next button functionality with randomization
         const nextButton = document.getElementById('nextButton');
         nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % quotes.length; // Cycle through quotes
+            currentIndex = getRandomQuoteIndex(); // Randomize the quote
             quoteElement.textContent = quotes[currentIndex];
         });
     </script>
