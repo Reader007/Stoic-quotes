@@ -12,10 +12,10 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             text-align: center;
         }
         
@@ -32,38 +32,6 @@
             text-transform: uppercase;
         }
         
-        .progress-bar-container {
-            width: 200px;
-            height: 20px;
-            border: 2px solid white;
-            margin: 0 auto 20px auto; /* Added margin-bottom for spacing */
-            background-color: black;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background-color: white;
-            image-rendering: pixelated;
-            position: absolute;
-            left: 0;
-            top: 0;
-            transition: width 0.5s ease-in-out;
-        }
-        
-        .progress-text {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            line-height: 20px;
-            font-size: 14px;
-            font-weight: 600; /* Bolder for visibility */
-            color: black; /* Black on white bar */
-            text-shadow: 0 0 1px white; /* White shadow for contrast on black */
-            z-index: 1;
-        }
-        
         .time-stats {
             font-size: 14px;
             line-height: 1.5;
@@ -76,12 +44,6 @@
             .memento-text {
                 font-size: 24px;
             }
-            .progress-bar-container {
-                width: 150px;
-            }
-            .progress-text {
-                font-size: 12px;
-            }
             .time-stats {
                 font-size: 12px;
             }
@@ -91,47 +53,52 @@
 <body>
     <div class="content-container">
         <div class="memento-text">Memento mori</div>
-        <div class="progress-bar-container">
-            <div class="progress-bar" id="yearProgress"></div>
-            <div class="progress-text" id="progressText"></div>
-        </div>
         <div class="time-stats" id="timeStats">
-            <p>Current Year: <span id="currentYear"></span></p>
-            <p>Days left in the current Year: <span id="daysLeft"></span></p>
-            <p>Hours left in current Year: <span id="hoursLeft"></span></p>
+            <p>Today is: <span id="todayDateTime"></span></p>
+            <p>Days left in <span id="currentYearDays"></span>: <span id="daysLeft"></span></p>
+            <p>Hours left in <span id="currentYearHours"></span>: <span id="hoursLeft"></span></p>
+            <p>Days on Earth: <span id="daysOnEarth"></span></p>
+            <p>Hours on Earth: <span id="hoursOnEarth"></span></p>
         </div>
     </div>
 
     <script>
-        // Function to calculate year progress and update bar/stats
-        function updateYearProgress() {
+        // Function to update time stats
+        function updateTimeStats() {
             const today = new Date();
             const year = today.getFullYear();
-            const yearStart = new Date(year, 0, 0); // January 1st
             const yearEnd = new Date(year + 1, 0, 0); // January 1st next year
-            const totalMs = yearEnd - yearStart;
-            const elapsedMs = today - yearStart;
-            const progress = (elapsedMs / totalMs) * 100;
-            
-            // Update bar width
-            const progressBar = document.getElementById('yearProgress');
-            progressBar.style.width = `${progress}%`;
-            
-            // Update year text inside bar
-            const progressText = document.getElementById('progressText');
-            progressText.textContent = `${year}`;
-            
-            // Update time stats
+            const birthDate = new Date(1995, 5, 12, 0, 0, 0); // June 12, 1995, midnight
+
+            // Current year stats
             const daysLeft = Math.floor((yearEnd - today) / (1000 * 60 * 60 * 24));
             const hoursLeft = Math.floor((yearEnd - today) / (1000 * 60 * 60));
             
-            document.getElementById('currentYear').textContent = year;
+            // Days and hours on Earth
+            const msOnEarth = today - birthDate;
+            const daysOnEarth = Math.floor(msOnEarth / (1000 * 60 * 60 * 24));
+            const hoursOnEarth = Math.floor(msOnEarth / (1000 * 60 * 60));
+            
+            // Format date as dd/mm/yyyy and include time
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const hours = String(today.getHours()).padStart(2, '0');
+            const minutes = String(today.getMinutes()).padStart(2, '0');
+            const seconds = String(today.getSeconds()).padStart(2, '0');
+            const dateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            
+            // Update DOM
+            document.getElementById('todayDateTime').textContent = dateTime;
+            document.getElementById('currentYearDays').textContent = year;
             document.getElementById('daysLeft').textContent = daysLeft;
+            document.getElementById('currentYearHours').textContent = year;
             document.getElementById('hoursLeft').textContent = hoursLeft;
+            document.getElementById('daysOnEarth').textContent = daysOnEarth;
+            document.getElementById('hoursOnEarth').textContent = hoursOnEarth;
         }
 
-        // Initialize progress bar and stats
-        updateYearProgress();
+        // Initialize time stats
+        updateTimeStats();
     </script>
 </body>
 </html>
